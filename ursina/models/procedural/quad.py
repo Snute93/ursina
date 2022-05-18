@@ -33,6 +33,10 @@ class QuadMesh(Mesh):
         self.radius = radius
         self.mode = mode
         self.thickness = thickness
+        
+        # Scaling should happen before making rounded Corners
+        for v in self.vertices: 
+            v[0] /= aspect
 
         _segments = segments
         _segments += 1
@@ -58,11 +62,11 @@ class QuadMesh(Mesh):
             self.uvs.append((v[0], v[1]))
 
         # scale corners horizontally with aspect
-        for v in self.vertices:
-            if v[0] < .5:
-                v[0] /= aspect
-            else:
-                v[0] = lerp(v[0], 1, 1-(1/aspect))
+        # for v in self.vertices:
+        #     if v[0] < .5:
+        #         v[0] /= aspect
+        #     else:
+        #         v[0] = lerp(v[0], 1, 1-(1/aspect))
 
         # move edges out to keep nice corners
         for v in self.vertices:
